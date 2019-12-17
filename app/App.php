@@ -1,7 +1,7 @@
 <?php
 namespace App;
 class App {
-    const INSTALL_FOLDER = '/pcb_final_project/public';
+    const INSTALL_FOLDER = 'php/Project/public';
     private static $request_url;
     private static $controller;
     /**
