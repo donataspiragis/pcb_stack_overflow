@@ -1,6 +1,6 @@
 <?php
 echo 'hi';
-   define('DBUSER','guest');
-   define('DBPWD','password');
+   define('DBUSER','root');
+   define('DBPWD','');
    define('DBHOST','localhost');
-   define('DBNAME','password');
+   define('DBNAME','pcb');
