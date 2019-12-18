@@ -34,7 +34,7 @@ class Route {
     public static function getController($url){
         $url_key = $url[0].'@'.$url[1];
         if(!isset(self::ROUTE[$url_key])){
-            die('Klaida 1');
+            return ['BaseController', 'render'];
         }
 
         return self::ROUTE[$url_key];
