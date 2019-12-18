@@ -13,12 +13,13 @@ class BaseController{
 
     public function render($templateName, array $parameters = array())
     {
+        $templateName = !empty($templateName) ? $templateName : 'error404';
 
         $twig = new Environment(new FilesystemLoader('../src/views'), array(
             'autoescape' => false,
         ));
 
-        return $twig->render($templateName.'.php', $parameters);
+        echo $twig->render($templateName.'.php', $parameters);
     }
 
 
