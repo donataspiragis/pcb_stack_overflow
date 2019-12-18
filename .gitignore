@@ -54,3 +54,10 @@
 public/js/main.js
 package-lock.json
 package.json
+config.php
+DataBase/createall.php
+DataBase/dbconnect.php
+DataBase/importag.php
+DataBase/importall.php
+DataBase/importex.php
+DataBase/importopic.php
