@@ -2,8 +2,6 @@
 {% extends 'layout.php' %}
 {% block title %}Home{% endblock %}
 {% block body %}
-EXAMPLE PAGE CONTROLLER INDEX RUNNING TEST
-
 <div class="container">
 {% for element in data %}
     <div class="jumbotron jumbotron-fluid">
@@ -19,6 +17,6 @@ EXAMPLE PAGE CONTROLLER INDEX RUNNING TEST
     <a role="button" class="btn btn-warning" href="/examples/edit/{{element.id}}">Edit</a>
     </div>
 {% endfor %}
-    <a type="button" class="btn btn-success" href="/examples/create">Add new</a>
+    <a type="button" class="btn btn-success" href="/examples/create/{{data[0].DocTopicId}}">Add new</a>
 </div>
 {% endblock %}
