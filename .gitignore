@@ -54,3 +54,5 @@
 public/js/main.js
 package-lock.json
 package.json
+
+config.php
