@@ -7,6 +7,7 @@ class Route {
      * @return routes for controllers
      */
     const ROUTE = [
+        '@' => ['FrontPageController', 'index'],
         'front@index' => ['FrontPageController', 'index'],
         'front@create' => ['FrontPageController', 'create'],
         'front@store' => ['FrontPageController', 'store'],
@@ -26,6 +27,7 @@ class Route {
         'topic@update' => ['TopicController', 'update'],
         'topic@destroy' => ['TopicController', 'destroy'],
         'nav@about' => ['MenuController', 'about'],
+        'statistics@index' => ['StatisticsController', 'index'],
     ];
 
     /**
@@ -33,7 +35,13 @@ class Route {
      * @return url key
      */
     public static function getController($url){
+        $url_key = '';
+        if( !isset($url[0]) || !isset($url[1])) {
+            $url_key = '@';
+        }
+        else {
         $url_key = $url[0].'@'.$url[1];
+        }
         if(!isset(self::ROUTE[$url_key])){
             return ['BaseController', 'render'];
         }
