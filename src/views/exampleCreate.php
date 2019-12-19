@@ -1,9 +1,9 @@
 
 {% extends 'layout.php' %}
-{% block title %}Home{% endblock %}
+{% block title %}Example create{% endblock %}
 {% block body %}
 <div class="container">
-    <form action="/examples/store/{{data}}" method="post">
+    <form action="{{ constant('App\\App::INSTALL_FOLDER') }}/examples/store/{{data}}" method="post">
         <div class="form-group">
             <label for="titleInput1">Title</label>
             <input type="text" name="Title" class="form-control" id="titleInput1">

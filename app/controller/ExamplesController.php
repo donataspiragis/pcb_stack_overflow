@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\App;
 use DataBase\Connection;
 use DateTime;
 use mysql_xdevapi\Collection;
@@ -21,11 +22,10 @@ class ExamplesController extends BaseController
         $data = ['Title'=>$_POST['Title'], 'BodyHtml'=>$_POST['BodyHtml'], 'CreationDate'=>$time, 'DocTopicId'=>$docTopicId, 'Score'=>0];
         $sql = "INSERT INTO examples  (Title, BodyHtml, CreationDate, DocTopicID, Score) VALUES (:Title, :BodyHtml, :CreationDate, :DocTopicId, :Score)";
         (new Connection)->storeData($sql, $data);
-        header("Location: /examples/index/$docTopicId");
+        header("Location: ". App::INSTALL_FOLDER."/examples/index/$docTopicId");
         exit();
     }
     public function edit($id) {
-        var_dump($_POST);
         $raw = (new Connection)->getData("SELECT * FROM examples WHERE id = $id");
         echo $this->render('exampleEdit', ['data' => $raw]);
 
@@ -36,7 +36,7 @@ class ExamplesController extends BaseController
 
         $sql = "UPDATE examples SET Title=:Title, BodyHtml=:BodyHtml, LastEditDate=:LastEditDate WHERE id=:id";
         (new Connection)->updateData($sql, $data);
-        header("Location: /examples/edit/$id");
+        header("Location: ". App::INSTALL_FOLDER."/examples/edit/$id");
         exit();
     }
     public function destroy($id) {
@@ -45,7 +45,7 @@ class ExamplesController extends BaseController
         $sql = "UPDATE examples SET Archived=:Archived, LastEditDate=:LastEditDate WHERE id=:id";
         (new Connection)->updateData($sql, $data);
         $docTopicId = ((new Connection)->getData("SELECT DocTopicId FROM examples WHERE id = $id"))[0]['DocTopicId'];
-        header("Location: /examples/index/$docTopicId");
+        header("Location: ". App::INSTALL_FOLDER."/examples/index/$docTopicId");
         exit();
     }
 }

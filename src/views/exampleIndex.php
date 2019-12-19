@@ -1,6 +1,6 @@
 
 {% extends 'layout.php' %}
-{% block title %}Home{% endblock %}
+{% block title %}{{element.Title}}{% endblock %}
 {% block body %}
 <div class="container">
 {% for element in data %}
@@ -14,9 +14,9 @@
         {% if element.LastEditDate != NULL %}
         <p>Last time modified at: {{element.LastEditDate}}</p>
         {% endif %}
-    <a role="button" class="btn btn-warning" href="/examples/edit/{{element.id}}">Edit</a>
+    <a role="button" class="btn btn-warning" href="{{ constant('App\\App::INSTALL_FOLDER') }}/examples/edit/{{element.id}}">Edit</a>
     </div>
 {% endfor %}
-    <a type="button" class="btn btn-success" href="/examples/create/{{data[0].DocTopicId}}">Add new</a>
+    <a type="button" class="btn btn-success" href="{{ constant('App\\App::INSTALL_FOLDER') }}/examples/create/{{data[0].DocTopicId}}">Add new</a>
 </div>
 {% endblock %}

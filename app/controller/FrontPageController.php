@@ -9,7 +9,7 @@ class FrontPageController extends BaseController  {
         $con = new \Connection();
         $data = $con->openConnection()->query('SELECT * from languages');
         $datatopic = $con->openConnection()->query("SELECT Title FROM topics WHERE title='java'");
-        echo $this->render('frontpage/index',  ['data' => $data, 'topics' => $datatopic]);
+        echo $this->render('index',  ['data' => $data, 'topics' => $datatopic]);
     }
 
 }
