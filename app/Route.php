@@ -25,6 +25,7 @@ class Route {
         'topic@edit' => ['TopicController', 'edit'],
         'topic@update' => ['TopicController', 'update'],
         'topic@destroy' => ['TopicController', 'destroy'],
+        'nav@about' => ['MenuController', 'about'],
     ];
 
     /**
