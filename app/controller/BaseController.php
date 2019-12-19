@@ -7,9 +7,15 @@ error_reporting(E_ALL);
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use DataBase\Connection;
 
 class BaseController{
 
+    protected $db;
+    public function __construct()
+    {
+        $this->db = new Connection();
+    }
 
     public function render($templateName, array $parameters = array())
     {
@@ -20,6 +26,16 @@ class BaseController{
         ));
 
         echo $twig->render($templateName.'.php', $parameters);
+    }
+    public function getData($string){
+
+
+        $data = [];
+        foreach ($this->db->openConnection()->query($string) as $row) {
+            $data[] = $row;
+        }
+        $this->db->closeConnection();
+        return $data;
     }
 
 

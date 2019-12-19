@@ -8,8 +8,9 @@
                 <div class="card-header"><h1>Search Your Answer</h1></div>
 
                 <div class="card-body">
-                    <form>
+                    <form action="/CBProject/public/front/store" method="post">
                         <select name="tag">
+                            <option value="default">Select Languege</option>
                             <option value="java">Java</option>
                             <option value="python">Python</option>
                             <option value="php">PHP</option>
@@ -17,7 +18,7 @@
                             <option value="javascript">Javascript</option>
                             <option value="ruby">Ruby</option>
                         </select>
-                        <input type="text" placeholder="Search..">
+                        <input type="text" name = "search" placeholder="Search..">
                         <button type="submit">Search</button>
                     </form>
                 </div>
@@ -32,7 +33,8 @@
 
                 {% for data in data|slice(0, 10)  %}
                 <p>
-                {{  data.Title }}
+                    <a href="/CBProject/public/front/index/{{  data.id }}">{{  data.Title }}</a>
+
                 </p>
                 {% endfor%}
 
