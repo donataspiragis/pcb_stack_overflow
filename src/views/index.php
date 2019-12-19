@@ -2,18 +2,36 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
-FRONT PAGE CONTROLLER INDEX RUNNING TEST
-<form>
-    <select name="tag">
-        <option value="java">Java</option>
-        <option value="php">PHP</option>
-        <option value="c#">C#</option>
-        <option value="javascript">Javascript</option>
-    </select>
-    <input type="text" placeholder="Search..">
-    <button type="submit">Search</button>
-</form>
+                <div class="card-body">
+                    <form action="/CBProject/public/front/store" method="post">
+                        <select name="tag">
+                            <option value="default">Select Languege</option>
+                            <option value="java">Java</option>
+                            <option value="python">Python</option>
+                            <option value="php">PHP</option>
+                            <option value="c#">C#</option>
+                            <option value="javascript">Javascript</option>
+                            <option value="ruby">Ruby</option>
+                        </select>
+                        <input type="text" name = "search" placeholder="Search..">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
 
+                {% for data in data|slice(0, 10)  %}
+                <p>
+                    <a href="/CBProject/public/front/index/{{  data.id }}">{{  data.DocTagId }} Title:{{  data.Title }}</a>
+
+                </p>
+                {% endfor%}
 
 
 <a href="#addTopic">Add Topic</a>

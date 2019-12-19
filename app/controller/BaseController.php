@@ -10,6 +10,11 @@ use Twig\Loader\FilesystemLoader;
 use DataBase\Connection;
 
 class BaseController{
+ protected $db;
+    public function __construct()
+    {
+        $this->db = new Connection();
+    }
 
     protected $db;
     public function __construct()
