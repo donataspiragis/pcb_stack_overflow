@@ -15,6 +15,7 @@
         <p>Last time modified at: {{element.LastEditDate}}</p>
         {% endif %}
     <a role="button" class="btn btn-warning" href="{{ constant('App\\App::INSTALL_FOLDER') }}/examples/edit/{{element.id}}">Edit</a>
+        <a type="button" class="btn btn-danger" href="{{ constant('App\\App::INSTALL_FOLDER') }}/examples/destroy/{{element.id}}">Delete this example</a>
     </div>
 {% endfor %}
     <a type="button" class="btn btn-success" href="{{ constant('App\\App::INSTALL_FOLDER') }}/examples/create/{{data[0].DocTopicId}}">Add new</a>
