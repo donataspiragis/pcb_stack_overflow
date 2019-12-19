@@ -54,5 +54,15 @@
 public/js/main.js
 package-lock.json
 package.json
+<<<<<<< HEAD
 
 config.php
+=======
+config.php
+DataBase/createall.php
+DataBase/dbconnect.php
+DataBase/importag.php
+DataBase/importall.php
+DataBase/importex.php
+DataBase/importopic.php
+>>>>>>> 8edd25c7d7bacb4dc46e0299f73c64a976da3edc

@@ -30,7 +30,6 @@ Class Connection {
     public function closeConnection() {
         $this->con = null;
     }
-
     public function getData($sql) {
         $data = [];
         foreach ($this->openConnection()->query($sql) as $row) {
@@ -39,5 +38,14 @@ Class Connection {
         $this->closeConnection();
         return $data;
     }
+    public function updateData($sql, $data)
+    {
+        $this->openConnection()->prepare($sql)->execute($data);
+        $this->closeConnection();
+    }
+    public function storeData($sql, $data)
+    {
+        $this->openConnection()->prepare($sql)->execute($data);
+        $this->closeConnection();
+    }
 }
-
