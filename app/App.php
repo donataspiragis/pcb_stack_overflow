@@ -1,7 +1,8 @@
 <?php
 namespace App;
+include('../newConfig.php');
 class App {
-    const INSTALL_FOLDER = '/pcb_final_project/public';
+    const INSTALL_FOLDER = root;
     private static $request_url;
     private static $controller;
     /**

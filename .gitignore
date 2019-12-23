@@ -66,3 +66,5 @@ DataBase/importall.php
 DataBase/importex.php
 DataBase/importopic.php
 >>>>>>> 8edd25c7d7bacb4dc46e0299f73c64a976da3edc
+/node_modules/
+newConfig.php
