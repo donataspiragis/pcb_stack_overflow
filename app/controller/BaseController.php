@@ -10,18 +10,11 @@ use Twig\Loader\FilesystemLoader;
 use DataBase\Connection;
 
 class BaseController{
- protected $db;
-    public function __construct()
-    {
-        $this->db = new Connection();
-    }
-
     protected $db;
     public function __construct()
     {
         $this->db = new Connection();
     }
-
     public function render($templateName, array $parameters = array())
     {
         $templateName = !empty($templateName) ? $templateName : 'error404';
@@ -43,6 +36,16 @@ class BaseController{
         return $data;
     }
 
+    public function getData($string){
+
+
+        $data = [];
+        foreach ($this->db->openConnection()->query($string) as $row) {
+            $data[] = $row;
+        }
+        $this->db->closeConnection();
+        return $data;
+    }
 
 }
 

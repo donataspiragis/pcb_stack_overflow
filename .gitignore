@@ -56,3 +56,6 @@ package-lock.json
 package.json
 
 config.php
+
+node_modules/
+>>>>>>> Stashed changes
