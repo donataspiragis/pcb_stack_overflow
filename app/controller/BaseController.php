@@ -11,6 +11,7 @@ use DataBase\Connection;
 
 class BaseController{
     protected $db;
+protected $db;
     public function __construct()
     {
         $this->db = new Connection();
@@ -18,14 +19,15 @@ class BaseController{
     public function render($templateName, array $parameters = array())
     {
         $templateName = !empty($templateName) ? $templateName : 'error404';
-
-        $twig = new Environment(new FilesystemLoader('../src/views'), array(
-            'autoescape' => false,
-        ));
-
+        $twig = new Environment(new FilesystemLoader('../src/views'), array('autoescape' => false));
         echo $twig->render($templateName.'.php', $parameters);
     }
-    public function getData($string){
+    public function error($templateName, array $parameters = array())
+    {
+        $twig = new Environment(new FilesystemLoader('../src/views'), array('autoescape' => false));
+        echo $twig->render('error404.php', $parameters);
+    }
+     public function getData($string){
 
 
         $data = [];
@@ -35,9 +37,6 @@ class BaseController{
         $this->db->closeConnection();
         return $data;
     }
-
-
-
 }
 
 

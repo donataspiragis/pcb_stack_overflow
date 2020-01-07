@@ -9,14 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 //require '../database/dbconnect.php';
 class FrontPageController extends BaseController  {
 
-    public function index(){
-
-        return $this->render('index', ['data'=>'']);
-    }
-    public function store(){
-        $request = Request::createFromGlobals();
-        $tag = $request->request->get('tag');
-        $title = $request->request->get('search');
+    public function index($tagName, $titleName){
+        
+        $tag = $tagName;
+        $title = $titleName;
         if($tag !='default') {
             if($title != ''){
                 $typeoftag = $this->getData("SELECT id FROM languages WHERE Tag = '" . $tag . "'");
@@ -41,9 +37,9 @@ class FrontPageController extends BaseController  {
             }
             return $this->render('index', ['data' => '',]);
         }
-
-
+        return $this->render('index', ['data' => '',]);
     }
+
 
     private function getTag($data){
         foreach($data as $key=>$value){

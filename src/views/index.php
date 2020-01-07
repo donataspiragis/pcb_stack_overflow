@@ -8,10 +8,9 @@
                 <div class="card-header"><h1>Search Your Answer</h1></div>
 
                 <div class="card-body">
-                    <form action="{{ constant('App\\App::INSTALL_FOLDER') }}/front/store" method="post">
+                    <form action="/PCB/public/front/store" method="post">
                         <div class="row">
-                        <div class="col">
-                        <select name="tag"  class="form-control">
+                        <select name="tag">
                             <option value="default">Select Languege</option>
                             <option value="java">Java</option>
                             <option value="python">Python</option>
@@ -20,32 +19,22 @@
                             <option value="javascript">Javascript</option>
                             <option value="ruby">Ruby</option>
                         </select>
-                        </div>
-                            <div class="col">
-                        <input type="text" name = "search" placeholder="Search.." class="form-control" >
-                            </div>
-                        <button type="submit" class="btn btn-info">Search</button>
-                        </div>
+                        <input type="text" name = "search" placeholder="Search..">
+                        <button type="submit">Search</button>
                     </form>
-                    <div class="front-form-header-question">
-                        <div style="margin: auto 5px; font-weight: 500;">Cant find topic ? </div>
-                        <div><button type="button" class="btn btn-info" style="margin: 15px 0 10px 0;">Add Topic</button></div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<div class="container" style="margin-bottom: 25px;">
-
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <table class="table">
-                    <thead class="thead-dark">
+                    <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col">id</th>
                         <th scope="col">Language</th>
                         <th scope="col">Title</th>
                         <th scope="col"></th>
@@ -58,8 +47,8 @@
                     <tr>
                         <th scope="row">{{loop.index}}</th>
                         <td>{{  data.TagName }}</td>
-                        <td> <em>{{  data.Title }} </em> </td>
-                        <td><a href="{{ constant('App\\App::INSTALL_FOLDER') }}/topic/index/{{ data.id }}" class="btn btn-outline-info">View</a></td>
+                        <td>{{  data.Title }}</td>
+                        <td><a href="{{ constant('App\\App::INSTALL_FOLDER') }}/topic/index/{{ data.id }}">View</a></td>
                     </tr>
 
 
@@ -72,7 +61,7 @@
             <nav aria-label="...">
                 <ul class="pagination">
                     <li class="page-item">
-                        <span class="btn btn-outline-danger" style="margin-right: 10px;">Total pages: {{ pag }}</span>
+                        <span class="page-link">Total {{ pag }}</span>
                     </li>
                     <li class="page-item">
                         <a class="page-link" href="#tab=4" tabindex="-1">Previous</a>
@@ -90,9 +79,10 @@
                     </li>
                 </ul>
             </nav>
-
+            <button type="button" class="btn btn-primary">Create</button>
         </div>
     </div>
 </div>
+
 
 {% endblock %}
