@@ -7,10 +7,24 @@ use PDO;
 
 class StatisticsController extends BaseController {
 
-    public function index() {
-        $topics = (new Connection)->getData("SELECT * FROM topics WHERE ViewCount > 10000");
-        $doc_tag_ids = [];
+    public $buttons = [
+        ['value' => 'ViewCount > 10000', 'text' => 'Topics Best'],
+        ['value' => 'DocTagId = 9', 'text' => 'PHP'],
+        ['value' => 'DocTagId = 5', 'text' => 'Java'],
+        ['value' => 'DocTagId = 4', 'text' => 'C#'],
+        ['value' => 'DocTagId = 11', 'text' => 'Python']
+    ];
 
+    public function index() {
+        $sql_where = !empty($_POST) ? $_POST['action'] : 'ViewCount > 10000';
+
+        foreach ($this->buttons as &$button) {
+            $button['class'] = $button['value'] === $sql_where ? 'btn-success' : 'btn-light';
+        }
+
+        $topics = (new Connection)->getData("SELECT * FROM topics WHERE $sql_where LIMIT 10");
+
+        $doc_tag_ids = [];
         foreach ($topics as $topic) {
             $id = $topic['DocTagId'];
 
@@ -18,7 +32,6 @@ class StatisticsController extends BaseController {
                 $doc_tag_ids[$id] = $id;
             }
         }
-
         $doc_tag_ids_imploded = implode(',', $doc_tag_ids);
 
         $languages = (new Connection)->getData("SELECT * FROM languages WHERE id in ($doc_tag_ids_imploded)");
@@ -30,14 +43,11 @@ class StatisticsController extends BaseController {
             $topic['Language'] = $langs[$topic['DocTagId']];
         }
 
+        usort($topics, function ($a, $b) {
+                return strnatcmp($a['ViewCount'], $b['ViewCount']);
+            });
 
-
-        // sort alphabetically by name
-        usort($topics, function($a, $b) {
-            return strnatcmp($a['ViewCount'], $b['ViewCount']);
-        });
-
-        echo $this->render('statisticsIndex', ['data' => array_reverse($topics)]);
+        echo $this->render('statisticsIndex', ['topics' => array_reverse($topics), 'btns' => $this->buttons]);
     }
 }
 
