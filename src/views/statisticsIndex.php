@@ -15,7 +15,7 @@
 {% for topic in topics %}
     <div class="container">
         <p style="display: inline-block; width: 50px; color: red;">{{topic.ViewCount}}</p>
-        <p style="display: inline-block; font-weight: bolder;">{{topic.Title}}</p>
+        <a href="{{ constant('App\\App::INSTALL_FOLDER') }}/topic/index/{{topic.DocTagId}}" style="display: inline-block; font-weight: bolder;">{{topic.Title}}</a>
         <p style="display: inline-block; margin-left: 5px; color: green;">{{topic.Language}}</p>
     </div>
 {% endfor %}
