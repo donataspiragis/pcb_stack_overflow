@@ -36,16 +36,7 @@ class BaseController{
         return $data;
     }
 
-    public function getData($string){
 
-
-        $data = [];
-        foreach ($this->db->openConnection()->query($string) as $row) {
-            $data[] = $row;
-        }
-        $this->db->closeConnection();
-        return $data;
-    }
 
 }
 

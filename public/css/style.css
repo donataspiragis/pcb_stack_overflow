@@ -19,3 +19,8 @@ body {
     height: 50px;
     background-color: #134347;
 }
+.front-form-header-question {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
