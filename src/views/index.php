@@ -8,7 +8,7 @@
                 <div class="card-header"><h1>Search Your Answer</h1></div>
 
                 <div class="card-body">
-                    <form action="/PCB/public" method="get">
+                    <form action="{{ constant('App\\App::INSTALL_FOLDER') }}" method="get">
                         <select name="tag">
                             <option value="default">Select Languege</option>
                             <option value="java">Java</option>
