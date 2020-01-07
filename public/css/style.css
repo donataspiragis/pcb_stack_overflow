@@ -19,3 +19,11 @@ body {
     height: 50px;
     background-color: #134347;
 }
+.actives {
+    background-color: rgba(0, 0, 255, 0.31);
+}
+#pagination a{
+    display:inline-block;
+    margin-right:5px;
+
+}
