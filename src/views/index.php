@@ -9,22 +9,34 @@
 
                 <div class="card-body">
                     <form action="{{ constant('App\\App::INSTALL_FOLDER') }}" method="get">
-                        <select name="tag">
-                            <option value="default">Select Languege</option>
+                        <div class="row">
+                            <div class="col">
+                        <select name="tag" class="form-control">
+                            <option value="default">Select Language</option>
                             <option value="java">Java</option>
                             <option value="python">Python</option>
                             <option value="php">PHP</option>
                             <option value="c#">C#</option>
+                            <option value="c++">C++</option>
+                            <option value=".net">NET</option>
                             <option value="javascript">Javascript</option>
                             <option value="ruby">Ruby</option>
+                            <option value="android">Android</option>
+                            <option value="swift">Swift</option>
+                            <option value="node.js">Node</option>
+                            <option value="html">HTML</option>
                         </select>
-                        <input type="text" name = "search" placeholder="Search..">
-                        <button type="submit">Search</button>
+                            </div>
+                            <div class="col">
+                        <input type="text" name = "search" placeholder="Search.." class="form-control">
+                            </div>
+                        <button type="submit" class="btn btn-info">Search</button>
+                        </div>
                     </form>
 
                     <div class="front-form-header-question">
                         <div style="margin: auto 5px; font-weight: 500;">Cant find topic ? Select language and add: </div>
-                        <form action="{{ constant('App\\App::INSTALL_FOLDER') }}/topic/create" method="get">
+                        <form action="{{ constant('App\\App::INSTALL_FOLDER') }}/topic/create/ {{ form.vars.value.id}}" method="get">
                             <div class="row">
                                 <div class="col">
                                     <select name="tag"  class="form-control" style="margin-top: 13px;">
@@ -57,17 +69,18 @@
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container" style="margin-bottom: 25px;">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <table class="table" id="dtBasicExample">
-                    <thead>
+                    <thead class="thead-dark">
                     <tr>
-                        <th scope="col">id</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Language</th>
-                        <th scope="col">Title</th>
-                        <th scope="col"></th>
+                        <th scope="col">Topic</th>
+                        <th scope="col">Viewed</th>
+                        <th scope="col">Check it</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -78,7 +91,8 @@
                         <th scope="row">{{loop.index}}</th>
                         <td>{{  data.TagName }}</td>
                         <td>{{  data.Title }}</td>
-                        <td><a href="{{ constant('App\\App::INSTALL_FOLDER') }}/topic/index/{{ data.id }}">View</a></td>
+                        <td>  <div class="btn btn-success"> {{  data.ViewCount }}</div>  </td>
+                        <td><a href="{{ constant('App\\App::INSTALL_FOLDER') }}/topic/index/{{ data.id }}" class="btn btn-outline-info">View</a></td>
                     </tr>
 
 

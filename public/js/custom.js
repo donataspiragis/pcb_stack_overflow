@@ -12,7 +12,7 @@ $(document).ready(function () {
         num_pages++;
         num_pages=Math.floor(num_pages++);
     }
-    jQuery('#pagination').append("<li class='page-item'><span class='page-link'>Total "+num_pages+"</span></li>");
+    jQuery('#pagination').append("<li class='page-item'><span class='btn btn-outline-danger' style='margin-right: 15px;'>Total "+num_pages+"</span></li>");
     for(var i=1; i<=num_pages; i++){
         if(i ==1){jQuery('#pagination').append("<li class='page-item li'><a class='page-link actives' href=> "+i+" </a></li>");
         }else jQuery('#pagination').append("<li class='page-item li'><a class='page-link' href=> "+i+" </a></li>");
