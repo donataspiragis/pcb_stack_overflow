@@ -11,7 +11,7 @@ use DataBase\Connection;
 
 class BaseController{
     protected $db;
-protected $db;
+//protected $db;
     public function __construct()
     {
         $this->db = new Connection();
