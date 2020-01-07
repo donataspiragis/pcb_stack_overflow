@@ -20,12 +20,3 @@ body {
     background-color: #134347;
 }
 
-#stat-form-container {
-    margin-top: 15px;
-    margin-bottom: 10px;
-}
-
-#stat-results-container > div {
-    margin: 5px;
-    padding: 0;
-}
