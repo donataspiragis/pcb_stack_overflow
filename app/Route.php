@@ -7,7 +7,8 @@ class Route {
      * @return routes for controllers
      */
     const ROUTE = [
-        'front@index' => ['FrontPageController', 'index'],
+        '' => ['FrontPageController', 'index'],
+//        'front@index' => ['FrontPageController', 'index'],
         'front@create' => ['FrontPageController', 'create'],
         'front@store' => ['FrontPageController', 'store'],
         'front@edit' => ['FrontPageController', 'edit'],
@@ -25,6 +26,8 @@ class Route {
         'topic@edit' => ['TopicController', 'edit'],
         'topic@update' => ['TopicController', 'update'],
         'topic@destroy' => ['TopicController', 'destroy'],
+        'nav@about' => ['MenuController', 'about'],
+        'statistics@index' => ['StatisticsController', 'index'],
     ];
 
     /**
@@ -32,12 +35,19 @@ class Route {
      * @return url key
      */
     public static function getController($url){
-        $url_key = $url[0].'@'.$url[1];
-        if(!isset(self::ROUTE[$url_key])){
-            die('Klaida 1');
-        }
-
-        return self::ROUTE[$url_key];
-
+        if ($url[0] =='examples' && isset($url[1]) ) { //  tikrina ar "examples" turi 3 parametra ir ar jis yra skaicius(../examples/index/1), jeigu ne, grazina 404 error page;
+            if (isset($url[2]) && is_numeric($url[2]) ) {
+            $url_key = $url[0] . '@' . $url[1];
+            }  else {
+                return ['BaseController', 'error'];
+            }
+        } else if (isset($url[0]) && isset($url[1])) {
+            $url_key = $url[0] . '@' . $url[1];
+        } else if (isset($url[0])){
+            $url_key = '';
+        } else {
+            return ['BaseController', 'error'];
+        };
+        return isset(self::ROUTE[$url_key]) ? self::ROUTE[$url_key] : ['BaseController', 'error'];;
     }
 }
