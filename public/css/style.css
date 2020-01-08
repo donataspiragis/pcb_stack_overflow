@@ -25,10 +25,14 @@ body {
     margin-bottom: 10px;
 }
 
-#stat-results-container > div {
-    margin: 5px;
-    padding: 0;
+#stat-results-container table {
+    width: initial;
 }
+
+#stat-results-container table td:last-child {
+    color: green;
+}
+
 .front-form-header-question {
     display: flex;
     flex-direction: row;
