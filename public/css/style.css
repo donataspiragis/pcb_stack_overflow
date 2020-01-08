@@ -27,7 +27,7 @@ body {
 }
 
 #stat-results-container table {
-    min-width: 550px;
+    min-width: 100%;
     width: initial;
 }
 
