@@ -4,24 +4,24 @@ B Group Stack Overflow project
            
             --Functionality--
 
--search questions related to language;
--search questions related to topic;
--search questions related to topic and language;
--add your own topic;
--add your own examples to topic;
--edit others or your own topic;
--edit others or your own examples;
--check statistics of most viewed topics;
+- search questions related to language;
+- search questions related to topic;
+- search questions related to topic and language;
+- add your own topic;
+- add your own examples to topic;
+- edit others or your own topic;
+- edit others or your own examples;
+- check statistics of most viewed topics;
                 
                  --Folder structue--
 
 Main folder structure: 
--app (folder) - holds main models and controllers. (BaseController, ExamplesController, FrontPageController, MenuController, StatisticsController, TopicController. Models: App, Route)
--DataBase (folder) - holds files with database tables and imports to database.
--public (folder) - holds files of styling (css folder), javascript (js folder) and main php file which is starting app.
--src (folder) - holds files of styling (css folder), javascript (js folder), which are generated
+- app (folder) - holds main models and controllers. (BaseController, ExamplesController, FrontPageController, MenuController, StatisticsController, TopicController. Models: App, Route)
+- DataBase (folder) - holds files with database tables and imports to database.
+- public (folder) - holds files of styling (css folder), javascript (js folder) and main php file which is starting app.
+- src (folder) - holds files of styling (css folder), javascript (js folder), which are generated
 to public folder later and templates of views which are given to browser.
--config files are in main directory of project.
+- config files are in main directory of project.
 
 
                 -- Starting project from zero -- 
