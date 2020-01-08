@@ -51,5 +51,21 @@ class FrontPageController extends BaseController  {
         }
         return $data;
     }
+public function update($param) {
+//        die();
+        $param = ltrim($param, 'z?tag=');
+        header("Location: ". App::INSTALL_FOLDER."/topic/create/". $param);
+        exit();
+    }
+    private function languageDropdown($limit = 1) {
+        $top= $this->getData("SELECT DocTagId, COUNT(*) AS suma FROM topics GROUP BY DocTagId ORDER BY `suma` DESC LIMIT $limit");
+        $str=[];
+        foreach($top as $t) {
+            $str[]=$t['DocTagId'];
+        }
+        $str=implode(",",$str);
+        $top= $this->getData("SELECT id, Title, Tag FROM `languages` WHERE id in ($str)");
+        return $top;
+    }
 }
 
