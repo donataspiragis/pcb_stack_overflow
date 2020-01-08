@@ -19,3 +19,32 @@ body {
     height: 50px;
     background-color: #134347;
 }
+
+#stat-form-container {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+#stat-results-container table {
+    min-width: 550px;
+    width: initial;
+}
+
+#stat-results-container table td:last-child {
+    color: green;
+}
+
+.front-form-header-question {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.actives {
+    background-color: rgba(0, 0, 255, 0.31);
+}
+#pagination a{
+    display:inline-block;
+    margin-right:5px;
+}

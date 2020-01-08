@@ -19,6 +19,7 @@
     {% if data[0].LastEditDate != NULL %}
     <p>Last time modified at: {{data[0].LastEditDate}}</p>
     {% endif %}
+        <a type="submit" class="btn btn-primary" href="{{ constant('App\\App::INSTALL_FOLDER') }}/examples/index/{{data[0].DocTopicId}}">Back</a>
         <a type="button" class="btn btn-danger" href="{{ constant('App\\App::INSTALL_FOLDER') }}/examples/destroy/{{data[0].id}}">Delete this example</a>
 </div>
 {% endblock %}
