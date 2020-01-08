@@ -51,10 +51,10 @@ class TopicController extends BaseController {
     }
 
      public function create($data) {
+        var_dump($data);
 
         $data = (integer) $data;
-        var_dump($data);
-//         echo $this->render('topicCreat', ['data' =>$data ]);
+         echo $this->render('topicCreat', ['data' =>$data ]);
      }
      public function store($languageID) {
          $time = date("Y-m-d H:i:s");
@@ -82,11 +82,9 @@ class TopicController extends BaseController {
 
      public function update($DocTagId) {
         $time = date("Y-m-d H:i:s");
-         $sql = "UPDATE topics SET Title='$_POST[Title]', RemarksHtml='$_POST[RemarksHtml]', LastEditDate='$time' WHERE id=$DocTagId";
-         $conn = (new Connection)->openConnection();
-         $stmt =$conn->prepare($sql);
-         $stmt->execute();
-         $conn = null;
+         $data = ['Title'=>$_POST['Title'], 'RemarksHtml'=>$_POST['RemarksHtml'], 'LastEditDate'=>$time, 'id'=>$DocTagId];
+         $sql = "UPDATE topics SET Title=:Title, RemarksHtml=:RemarksHtml, LastEditDate=:LastEditDate WHERE id=:id";
+         (new Connection)->updateData($sql, $data);
         header("Location: ". App::INSTALL_FOLDER."/topic/index/$DocTagId");
         exit();
      }
