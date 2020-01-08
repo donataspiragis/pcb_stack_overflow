@@ -9,51 +9,39 @@ use Symfony\Component\HttpFoundation\Request;
 
 //require '../database/dbconnect.php';
 class FrontPageController extends BaseController  {
-    public function index($page = 1){
-        $drop = $this->languageDropdown(105);
+    public function index(){
         $request = Request::createFromGlobals();
         $tag = $request->query->get('tag');
         $title = $request->query->get('search');
-        $page = $request->query->get('page');
-        if($tag !='default' && $tag !='') {
-            if($title != ''){
-                $typeoftag = $this->getData("SELECT id FROM languages WHERE Tag = '" . $tag . "'");
-                $typeoftag = $typeoftag[0]['id'];
-                $raw = $this->getData("SELECT * FROM topics WHERE DocTagId = $typeoftag AND LOCATE('".$title."', RemarksHtml) > 0 OR LOCATE('".$title."', Title) > 0");
-                $raw = self::getTag($raw);
-                return $this->render('index', ['data' => $raw, 'dropdownList'=>$drop]);
-            }
+        $locate = '';
+        $new = explode( ' ', $title ) ;
+        if($tag !='default' && $tag != '') {
             $typeoftag = $this->getData("SELECT id FROM languages WHERE Tag = '" . $tag . "'");
             $typeoftag = $typeoftag[0]['id'];
+        }
+
+        foreach($new as $value){
+            $locate .= " AND LOCATE('".$value."', RemarksHtml) > 0";
+        }
+        if($tag !='default' && $tag !='') {
+            if($title != ''){
+                $raw = $this->getData("SELECT * FROM topics WHERE DocTagId = $typeoftag $locate");
+                $raw = self::getTag($raw);
+                return $this->render('index', ['data' => $raw]);
+            }
             $raw = $this->getData("SELECT * FROM topics WHERE DocTagId = $typeoftag");
             $raw = self::getTag($raw);
-            return $this->render('index', ['data' => $raw, 'dropdownList'=>$drop]);
+            return $this->render('index', ['data' => $raw]);
         }else {
             if($title != ''){
-                $raw = $this->getData("SELECT * FROM topics WHERE  LOCATE('".$title."', RemarksHtml) > 0");
+                $locate = substr($locate,4);
+                $raw = $this->getData("SELECT * FROM topics WHERE  $locate");
                 $raw = self::getTag($raw);
-                return $this->render('index', ['data' => $raw, 'dropdownList'=>$drop]);
+                return $this->render('index', ['data' => $raw]);
             }
-            return $this->render('index', ['data' => '', 'dropdownList'=>$drop]);
+            return $this->render('index', ['data' => '']);
         }
-        return $this->render('index', ['data' => '', 'dropdownList'=>$drop]);
-    }
-    public function update($param) {
-//        die();
-        $param = ltrim($param, 'z?tag=');
-
-        header("Location: ". App::INSTALL_FOLDER."/topic/create/". $param);
-        exit();
-    }
-    private function languageDropdown($limit = 1) {
-        $top= $this->getData("SELECT DocTagId, COUNT(*) AS suma FROM topics GROUP BY DocTagId ORDER BY `suma` DESC LIMIT $limit");
-        $str=[];
-        foreach($top as $t) {
-            $str[]=$t['DocTagId'];
-        }
-        $str=implode(",",$str);
-        $top= $this->getData("SELECT id, Title, Tag FROM `languages` WHERE id in ($str)");
-        return $top;
+        return $this->render('index', ['data' => '']);
     }
     private function getTag($data){
         foreach($data as $key=>$value){
