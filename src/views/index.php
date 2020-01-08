@@ -1,7 +1,7 @@
 {% extends 'layout.php' %}
 {% block title %}Home{% endblock %}
 {% block body %}
-<div class="container">
+<div class="container" style="margin-top: 95px;">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -23,6 +23,12 @@
                         <button type="submit" class="btn btn-info">Search</button>
                         </div>
                     </form>
+
+                    <!--                    FOR LANGUAGE CONTROLLER -->
+
+                    <a href="{{ constant('App\\App::INSTALL_FOLDER') }}/language/create" class="btn btn-info">Add Language</a>
+
+                    <!--                    FOR LANGUAGE CONTROLLER -->
 
                     <div class="front-form-header-question">
                         <div style="margin: auto 5px; font-weight: 500;">Cant find topic ? Select language and add: </div>

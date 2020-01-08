@@ -14,6 +14,7 @@ class FrontPageController extends BaseController  {
         $drop = $this->languageDropdown(105);
         $tag = $request->query->get('tag');
         $title = $request->query->get('search');
+
         $locate = '';
         $new = explode( ' ', $title ) ;
         if($tag !='default' && $tag != '') {
