@@ -9,28 +9,34 @@ use Symfony\Component\HttpFoundation\Request;
 
 //require '../database/dbconnect.php';
 class FrontPageController extends BaseController  {
-    public function index($page = 1){
-        $drop = $this->languageDropdown(105);
+    public function index(){
         $request = Request::createFromGlobals();
+        $drop = $this->languageDropdown(105);
         $tag = $request->query->get('tag');
         $title = $request->query->get('search');
-        $page = $request->query->get('page');
+        $locate = '';
+        $new = explode( ' ', $title ) ;
+        if($tag !='default' && $tag != '') {
+            $typeoftag = $this->getData("SELECT id FROM languages WHERE Tag = '" . $tag . "'");
+            $typeoftag = $typeoftag[0]['id'];
+        }
+    
+        foreach($new as $value){
+            $locate .= " AND LOCATE('".$value."', RemarksHtml) > 0";
+        }
         if($tag !='default' && $tag !='') {
             if($title != ''){
-                $typeoftag = $this->getData("SELECT id FROM languages WHERE Tag = '" . $tag . "'");
-                $typeoftag = $typeoftag[0]['id'];
-                $raw = $this->getData("SELECT * FROM topics WHERE DocTagId = $typeoftag AND LOCATE('".$title."', RemarksHtml) > 0 OR LOCATE('".$title."', Title) > 0");
+                $raw = $this->getData("SELECT * FROM topics WHERE DocTagId = $typeoftag $locate");
                 $raw = self::getTag($raw);
                 return $this->render('index', ['data' => $raw, 'dropdownList'=>$drop]);
             }
-            $typeoftag = $this->getData("SELECT id FROM languages WHERE Tag = '" . $tag . "'");
-            $typeoftag = $typeoftag[0]['id'];
             $raw = $this->getData("SELECT * FROM topics WHERE DocTagId = $typeoftag");
             $raw = self::getTag($raw);
             return $this->render('index', ['data' => $raw, 'dropdownList'=>$drop]);
         }else {
             if($title != ''){
-                $raw = $this->getData("SELECT * FROM topics WHERE  LOCATE('".$title."', RemarksHtml) > 0");
+                $locate = substr($locate,4);
+                $raw = $this->getData("SELECT * FROM topics WHERE  $locate");
                 $raw = self::getTag($raw);
                 return $this->render('index', ['data' => $raw, 'dropdownList'=>$drop]);
             }
