@@ -51,7 +51,7 @@ class TopicController extends BaseController {
     }
 
      public function create($data) {
-        var_dump($data);
+//        var_dump($data);
 
         $data = (integer) $data;
          echo $this->render('topicCreat', ['data' =>$data ]);

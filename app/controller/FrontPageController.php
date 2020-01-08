@@ -39,8 +39,10 @@ class FrontPageController extends BaseController  {
         return $this->render('index', ['data' => '', 'dropdownList'=>$drop]);
     }
     public function update($param) {
-        $param=ltrim($param, '?tag=');
-        header("Location: ". App::INSTALL_FOLDER."/topic/create/$param");
+//        die();
+        $param = ltrim($param, 'z?tag=');
+
+        header("Location: ". App::INSTALL_FOLDER."/topic/create/". $param);
         exit();
     }
     private function languageDropdown($limit = 1) {

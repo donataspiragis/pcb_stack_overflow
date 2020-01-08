@@ -26,7 +26,7 @@
 
                     <div class="front-form-header-question">
                         <div style="margin: auto 5px; font-weight: 500;">Cant find topic ? Select language and add: </div>
-                        <form action="{{ constant('App\\App::INSTALL_FOLDER') }}/front/update/" method="get">
+                        <form action="{{ constant('App\\App::INSTALL_FOLDER') }}/front/update/z" method="get">
                             <div class="row">
                                 <div class="col">
                                     <select name="tag"  class="form-control" style="margin-top: 13px;">
