@@ -12,7 +12,9 @@ class StatisticsController extends BaseController {
         ['value' => 'DocTagId = 9', 'text' => 'PHP'],
         ['value' => 'DocTagId = 5', 'text' => 'Java'],
         ['value' => 'DocTagId = 4', 'text' => 'C#'],
-        ['value' => 'DocTagId = 11', 'text' => 'Python']
+        ['value' => 'DocTagId = 11', 'text' => 'Python'],
+        ['value' => 'DocTagId = 6', 'text' => 'Android'],
+        ['value' => 'DocTagId = 8', 'text' => 'Javascript']
     ];
 
     public function index() {

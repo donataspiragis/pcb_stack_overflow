@@ -23,9 +23,11 @@ body {
 #stat-form-container {
     margin-top: 15px;
     margin-bottom: 10px;
+    padding-left: 20px;
 }
 
 #stat-results-container table {
+    min-width: 550px;
     width: initial;
 }
 
