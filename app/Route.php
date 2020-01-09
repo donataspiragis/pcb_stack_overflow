@@ -27,6 +27,7 @@ class Route {
         'topic@update' => ['TopicController', 'update'],
         'topic@destroy' => ['TopicController', 'destroy'],
         'nav@about' => ['MenuController', 'about'],
+        'statistics@index' => ['StatisticsController', 'index'],
         'language@index' => ['LanguageController', 'index'],
         'language@create' => ['LanguageController', 'create'],
         'language@store' => ['LanguageController', 'store'],
