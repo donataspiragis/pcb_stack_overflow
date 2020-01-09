@@ -1,7 +1,7 @@
 {% extends 'layout.php' %}
 {% block title %}Home{% endblock %}
 {% block body %}
-<div class="container" style="margin-top: 95px;">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
