@@ -4,9 +4,6 @@ namespace App\Controller;
 use App\App;
 use DataBase\Connection;
 use DateTime;
-use mysql_xdevapi\Collection;
-use PDO;
-
 
 class ExamplesController extends BaseController
 {
@@ -15,7 +12,12 @@ class ExamplesController extends BaseController
         echo $this->render('exampleIndex', ['data' => $raw]);
     }
     public function create($docTopicId) {
-        echo $this->render('exampleCreate', ['data'=>$docTopicId]);
+        $raw = (new Connection)->getData("SELECT Title, id FROM topics WHERE id = $docTopicId AND `Archived` IS NULL");
+        if (!empty($raw)) {
+            echo $this->render('exampleCreate', ['data' => $raw]);
+        } else{
+            echo $this->render('error404', ['data' => $raw]);
+        }
     }
     public function store($docTopicId) {
         $time = (new DateTime())->format('Y-m-d H:i:s');
@@ -27,8 +29,15 @@ class ExamplesController extends BaseController
     }
     public function edit($id) {
         $raw = (new Connection)->getData("SELECT * FROM examples WHERE id = $id");
-        echo $this->render('exampleEdit', ['data' => $raw]);
-
+//        var_dump($raw);
+        if (!empty($raw)) {
+        $DocTopicId =$raw[0]['DocTopicId'];
+        $title = (new Connection)->getData("SELECT Title FROM topics WHERE id = $DocTopicId AND `Archived` IS NULL");
+        $title = $title[0]['Title'];
+        echo $this->render('exampleEdit', ['data' => $raw, 'title'=>$title]);
+        } else {
+            echo $this->render('error404', ['data' => $raw]);
+        }
     }
     public function update($id) {
         $time = (new DateTime())->format('Y-m-d H:i:s');
@@ -36,7 +45,7 @@ class ExamplesController extends BaseController
 
         $sql = "UPDATE examples SET Title=:Title, BodyHtml=:BodyHtml, LastEditDate=:LastEditDate WHERE id=:id";
         (new Connection)->updateData($sql, $data);
-        header("Location: ". App::INSTALL_FOLDER."/examples/edit/$id");
+        header("Location: ". App::INSTALL_FOLDER."/examples/index/".$_POST['DocTopicId']);
         exit();
     }
     public function destroy($id) {

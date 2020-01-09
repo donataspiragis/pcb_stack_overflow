@@ -3,10 +3,11 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 <div class="container">
-    <h2>Edit example</h2>
+    <h2>Edit example for: {{title}}</h2>
     <form action="{{ constant('App\\App::INSTALL_FOLDER') }}/examples/update/{{data[0].id}}" method="post">
+        <input type="hidden" name="DocTopicId" value="{{data[0].DocTopicId}}">
         <div class="form-group">
-            <label for="titleInput1">Title</label>
+            <label for="titleInput1">Example title</label>
             <input type="text" name="Title" class="form-control" id="titleInput1" value="{{data[0].Title}}">
         </div>
         <div class="form-group">
