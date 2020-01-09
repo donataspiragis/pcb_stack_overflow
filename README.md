@@ -60,6 +60,7 @@ failas package.json skiltis po devDependencies turi buti tokia:
   },
 
 - npm run webpack
+composer require nesbot/carbon
 
                 -- After all installations --
 After that in browser window call file named: createall.php

@@ -8,14 +8,23 @@ ini_set('display_startup_errors', 1);
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use DataBase\Connection;
+use Carbon\Carbon;
 
 class BaseController{
     protected $db;
-//protected $db;
+    public static $carb;
+
     public function __construct()
     {
         $this->db = new Connection();
+
     }
+
+    public static function Carbonated(){
+        self::$carb = Carbon::now()->setTimezone('Europe/Helsinki');
+        return self::$carb;
+    }
+
     public function render($templateName, array $parameters = array())
     {
         $templateName = !empty($templateName) ? $templateName : 'error404';
