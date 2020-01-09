@@ -59,7 +59,7 @@ class TopicController extends BaseController {
         $title=strlen($_POST["Title"]);
         $topic=strlen($_POST["RemarksHtml"]);
         if($title!=0 && $topic !=0 && $id>0){
-            $time = date("Y-m-d H:i:s");
+            $time = BaseController::Carbonated();
             $data = ['Title'=>$_POST['Title'], 'RemarksHtml'=>$_POST['RemarksHtml'], 'CreationDate'=>$time, 'DocTagId'=>$id, 'ViewCount'=>0, 'Archived'=>NULL];
             $sql = "INSERT INTO topics (Title, RemarksHtml, CreationDate, DocTagId, ViewCount, Archived) VALUES (:Title, :RemarksHtml, :CreationDate, :DocTagId, :ViewCount, :Archived)";
             (new Connection)->storeData($sql, $data);
@@ -89,7 +89,7 @@ class TopicController extends BaseController {
          $title=strlen($_POST["Title"]);
          $topic=strlen($_POST["RemarksHtml"]);
          if($title!=0 && $topic !=0) {
-             $time = date("Y-m-d H:i:s");
+             $time = BaseController::Carbonated();
              $data = ['Title' => $_POST['Title'], 'RemarksHtml' => $_POST['RemarksHtml'], 'LastEditDate' => $time, 'id' => $DocTagId];
              $sql = "UPDATE topics SET Title=:Title, RemarksHtml=:RemarksHtml, LastEditDate=:LastEditDate WHERE id=:id";
              (new Connection)->updateData($sql, $data);
