@@ -5,14 +5,13 @@
     <form action="{{ constant('App\\App::INSTALL_FOLDER') }}/topic/store/{{data}}" method="post">
         <div>
             <label for="topicTitle">Topic title:</label>
-            <textarea class="form-control" id="topicTitle" rows="1" name="Title"></textarea>
+            <input class="form-control" id="topicTitle" type="text" name="Title">
         </div>
         <div>
             <label for="topicInfo">Topic:</label>
             <textarea class="form-control" id="topicInfo" rows="10" name="RemarksHtml"></textarea>
         </div>
         <input type="submit" class="btn btn-warning"></input>
-        <a href="{{ constant('App\\App::INSTALL_FOLDER') }}" class="btn btn-warning" >Cancel</a>
     </form>
 </div>
 {% endblock %}
