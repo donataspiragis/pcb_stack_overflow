@@ -42,7 +42,18 @@ class ExamplesController extends BaseController
     public function update($id) {
         $time = BaseController::Carbonated();
         $data = ['Title'=>$_POST['Title'], 'BodyHtml'=>$_POST['BodyHtml'], 'LastEditDate'=>$time, 'id'=>$id];
-
+	preg_match_all('/<code>(.*?)<\/code>/s', $data['BodyHtml'], $matches);
+        foreach($matches[1] as $value){
+            $new = htmlspecialchars($value);
+            $data['BodyHtml'] = str_replace($value, $new, $data['BodyHtml']);
+        }
+        preg_match_all('/<script>(.*?)<\/script>/s', $data['BodyHtml'], $scripts);
+        foreach($scripts[1] as $values){
+           
+            $neaw = '<code> <script>'.$values.'</script> </code>';
+            $values = '<script>'.$values.'</script>';
+            $data['BodyHtml'] = str_replace($values, $neaw, $data['BodyHtml']);
+        }
         $sql = "UPDATE examples SET Title=:Title, BodyHtml=:BodyHtml, LastEditDate=:LastEditDate WHERE id=:id";
         (new Connection)->updateData($sql, $data);
         header("Location: ". App::INSTALL_FOLDER."/examples/index/".$_POST['DocTopicId']);

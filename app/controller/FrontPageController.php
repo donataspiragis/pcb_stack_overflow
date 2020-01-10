@@ -23,7 +23,7 @@ class FrontPageController extends BaseController  {
         }
     
         foreach($new as $value){
-            $locate .= " AND LOCATE('".$value."', RemarksHtml) > 0";
+            $locate .= " AND LOCATE('".$value."', RemarksHtml) > 0 OR LOCATE('".$value."', Title) > 0)";
         }
         if($tag !='default' && $tag !='') {
             if($title != ''){
