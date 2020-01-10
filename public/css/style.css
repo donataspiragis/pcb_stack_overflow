@@ -8,6 +8,7 @@ body * {
 
 body {
     padding-bottom: 50px;
+    padding-top: 85px;
     min-height: 100vh;
     position: relative;
 }
@@ -27,7 +28,7 @@ body {
 }
 
 #stat-results-container table {
-    min-width: 550px;
+    min-width: 100%;
     width: initial;
 }
 

@@ -24,6 +24,12 @@
                         </div>
                     </form>
 
+                    <!--                    FOR LANGUAGE CONTROLLER -->
+
+                    <a href="{{ constant('App\\App::INSTALL_FOLDER') }}/language/create" class="btn btn-info">Add Language</a>
+
+                    <!--                    FOR LANGUAGE CONTROLLER -->
+
                     <div class="front-form-header-question">
                         <div style="margin: auto 5px; font-weight: 500;">Cant find topic ? Select language and add: </div>
                         <form action="{{ constant('App\\App::INSTALL_FOLDER') }}/front/update/z" method="get">

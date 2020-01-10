@@ -3,6 +3,7 @@
 {% block title %}{{element.Title}}{% endblock %}
 {% block body %}
 <div class="container">
+    <a type="button" class="btn btn-success sticky-top" href="{{ constant('App\\App::INSTALL_FOLDER') }}/topic/index/{{data[0].DocTopicId}}">Back to topics</a>
 {% for element in data %}
     <div class="jumbotron jumbotron-fluid">
         <div class="container">

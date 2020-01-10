@@ -9,11 +9,12 @@ class TopicController extends BaseController {
 
 
     public function index($DocTagId) {
-        //takes required data for topic from db
-        $rawTopic = (new Connection)->getData("SELECT Title, RemarksHtml, CreationDate, LastEditDate, ViewCount FROM topics WHERE id = $DocTagId AND Archived IS NULL");
-        //takes the best score example
-        $sqlGetTopic="SELECT Title, BodyHtml, CreationDate, LastEditDate, Score FROM examples WHERE DocTopicId = $DocTagId AND Archived IS NULL ORDER BY Score desc LIMIT 1 ";
-        $rawExample = (new Connection)->getData($sqlGetTopic);
+        $sqlGetTopic="SELECT Title, RemarksHtml, CreationDate, LastEditDate, ViewCount FROM topics WHERE id = $DocTagId AND Archived IS NULL";
+        $rawTopic = (new Connection)->getData($sqlGetTopic);
+        $sqlGetTExample="SELECT Title, BodyHtml, CreationDate, LastEditDate, Score FROM examples WHERE DocTopicId = $DocTagId AND Archived IS NULL ORDER BY Score desc LIMIT 1 ";
+        $rawExample = (new Connection)->getData($sqlGetTExample);
+        $sqlGetExamplesNumber="SELECT COUNT(Archived is NULL) AS examplesNumber FROM examples WHERE DocTopicId = $DocTagId";
+        $examplesNumber=(new Connection)->getData($sqlGetExamplesNumber);
         //checks if rawTopic with selected id exists
         if(!empty($rawTopic)){
             $topicData=[];
@@ -23,12 +24,11 @@ class TopicController extends BaseController {
             $topicData["LastEditDate"]=$rawTopic[0]["LastEditDate"];
             $ViewCount=$rawTopic[0]["ViewCount"]+1;
             $topicData["ViewCount"]=$ViewCount;
-            $sql="UPDATE topics SET ViewCount=$ViewCount WHERE id=$DocTagId";
-            $conn = (new Connection)->openConnection();
-            $stmt =$conn->prepare($sql);
-            $stmt->execute();
-            $conn = null;
+            $data = ['ViewCount' => $ViewCount, 'id'=>$DocTagId];
+            $sql = "UPDATE topics SET ViewCount=:ViewCount WHERE id=:id";
+            (new Connection)->updateData($sql, $data);
             $topicData["TopicID"]=$DocTagId;
+            $topicData["ExamplesNumber"]=$examplesNumber[0]["examplesNumber"];
             //checks if example not archived or exists at all
             if($rawExample!=NULL){
                 $topicData["ExampleTitle"]=$rawExample[0]["Title"];
@@ -41,33 +41,38 @@ class TopicController extends BaseController {
                 //change to take another example
                 $topicData["ExampleTitle"]=NULL;
             }
-//            var_dump($topicData);
             echo $this->render('topicIndex', ['data' => $topicData]);
         }
         else{
-            //here should be 404 Error page call
-            echo $this->render('topicIndex', ['data' => NULL]);
+            // 404 Error page call
+            echo $this->render('error404');
         }
     }
 
-     public function create($data) {
-//        var_dump($data);
-
-        $data = (integer) $data;
-         echo $this->render('topicCreat', ['data' =>$data ]);
+     public function create($id) {
+         $sql="SELECT * FROM `languages` GROUP BY Title";
+         echo $this->render('topicCreat', ['data' =>$id]);
      }
-     public function store($languageID) {
-         $time = date("Y-m-d H:i:s");
-         $sql = "INSERT INTO topics (Title, RemarksHtml, CreationDate, DocTagID, ViewCount, Archived) VALUES ('$_POST[Title]', '$_POST[RemarksHtml]', '$time', $languageID, 0, NULL)";
-         $conn = (new Connection)->openConnection();
-         $stmt =$conn->prepare($sql);
-         $stmt->execute();
-         $conn = null;
+
+     public function store($id) {
+        var_dump($_POST);
+        $title=strlen($_POST["Title"]);
+        $topic=strlen($_POST["RemarksHtml"]);
+        if($title!=0 && $topic !=0 && $id>0){
+            $time = BaseController::Carbonated();
+            $data = ['Title'=>$_POST['Title'], 'RemarksHtml'=>$_POST['RemarksHtml'], 'CreationDate'=>$time, 'DocTagId'=>$id, 'ViewCount'=>0, 'Archived'=>NULL];
+            $sql = "INSERT INTO topics (Title, RemarksHtml, CreationDate, DocTagId, ViewCount, Archived) VALUES (:Title, :RemarksHtml, :CreationDate, :DocTagId, :ViewCount, :Archived)";
+            (new Connection)->storeData($sql, $data);
          $sql2="SELECT id FROM topics ORDER BY id desc LIMIT 1";
          $id= (new Connection)->getData($sql2)[0]["id"];
          header("Location: ". App::INSTALL_FOLDER."/topic/index/$id");
          exit();
+        }
+        else{
+            echo '<script>function goBack() {window.history.go(-1);}goBack() </script>';
+        }
      }
+
     public function edit($DocTagId) {
         $sql="SELECT id, Title, RemarksHtml, CreationDate, LastEditDate, ViewCount FROM topics WHERE id = $DocTagId AND Archived IS NULL";
         $rawTopic = (new Connection)->getData($sql);
@@ -81,20 +86,25 @@ class TopicController extends BaseController {
     }
 
      public function update($DocTagId) {
-        $time = date("Y-m-d H:i:s");
-         $data = ['Title'=>$_POST['Title'], 'RemarksHtml'=>$_POST['RemarksHtml'], 'LastEditDate'=>$time, 'id'=>$DocTagId];
-         $sql = "UPDATE topics SET Title=:Title, RemarksHtml=:RemarksHtml, LastEditDate=:LastEditDate WHERE id=:id";
-         (new Connection)->updateData($sql, $data);
-        header("Location: ". App::INSTALL_FOLDER."/topic/index/$DocTagId");
-        exit();
+         $title=strlen($_POST["Title"]);
+         $topic=strlen($_POST["RemarksHtml"]);
+         if($title!=0 && $topic !=0) {
+             $time = BaseController::Carbonated();
+             $data = ['Title' => $_POST['Title'], 'RemarksHtml' => $_POST['RemarksHtml'], 'LastEditDate' => $time, 'id' => $DocTagId];
+             $sql = "UPDATE topics SET Title=:Title, RemarksHtml=:RemarksHtml, LastEditDate=:LastEditDate WHERE id=:id";
+             (new Connection)->updateData($sql, $data);
+             header("Location: " . App::INSTALL_FOLDER . "/topic/index/$DocTagId");
+             exit();
+         }
+         else{
+             echo '<script>function goBack() {window.history.go(-1);}goBack() </script>';
+         }
      }
 
     public function destroy($docTagId) {
-        $sql="UPDATE topics SET Archived=0 WHERE id=$docTagId";
-        $conn = (new Connection)->openConnection();
-        $stmt =$conn->prepare($sql);
-        $stmt->execute();
-        $conn = null;
+        $data = ['Archived' => 0, 'id'=>$docTagId];
+        $sql = "UPDATE topics SET Archived=:Archived WHERE id=:id";
+        (new Connection)->updateData($sql, $data);
         header("Location: ". App::INSTALL_FOLDER);
         exit();
     }

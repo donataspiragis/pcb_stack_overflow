@@ -4,9 +4,6 @@ namespace App\Controller;
 use App\App;
 use DataBase\Connection;
 use DateTime;
-use mysql_xdevapi\Collection;
-use PDO;
-
 
 class ExamplesController extends BaseController
 {
@@ -15,10 +12,15 @@ class ExamplesController extends BaseController
         echo $this->render('exampleIndex', ['data' => $raw]);
     }
     public function create($docTopicId) {
-        echo $this->render('exampleCreate', ['data'=>$docTopicId]);
+        $raw = (new Connection)->getData("SELECT Title, id FROM topics WHERE id = $docTopicId AND `Archived` IS NULL");
+        if (!empty($raw)) {
+            echo $this->render('exampleCreate', ['data' => $raw]);
+        } else{
+            echo $this->render('error404', ['data' => $raw]);
+        }
     }
     public function store($docTopicId) {
-        $time = (new DateTime())->format('Y-m-d H:i:s');
+        $time = BaseController::Carbonated();
         $data = ['Title'=>$_POST['Title'], 'BodyHtml'=>$_POST['BodyHtml'], 'CreationDate'=>$time, 'DocTopicId'=>$docTopicId, 'Score'=>0];
         $sql = "INSERT INTO examples  (Title, BodyHtml, CreationDate, DocTopicID, Score) VALUES (:Title, :BodyHtml, :CreationDate, :DocTopicId, :Score)";
         (new Connection)->storeData($sql, $data);
@@ -27,20 +29,40 @@ class ExamplesController extends BaseController
     }
     public function edit($id) {
         $raw = (new Connection)->getData("SELECT * FROM examples WHERE id = $id");
-        echo $this->render('exampleEdit', ['data' => $raw]);
-
+//        var_dump($raw);
+        if (!empty($raw)) {
+        $DocTopicId =$raw[0]['DocTopicId'];
+        $title = (new Connection)->getData("SELECT Title FROM topics WHERE id = $DocTopicId AND `Archived` IS NULL");
+        $title = $title[0]['Title'];
+        echo $this->render('exampleEdit', ['data' => $raw, 'title'=>$title]);
+        } else {
+            echo $this->render('error404', ['data' => $raw]);
+        }
     }
     public function update($id) {
-        $time = (new DateTime())->format('Y-m-d H:i:s');
+        $time = BaseController::Carbonated();
         $data = ['Title'=>$_POST['Title'], 'BodyHtml'=>$_POST['BodyHtml'], 'LastEditDate'=>$time, 'id'=>$id];
 
+preg_match_all('/<script>(.*?)<\/script>/s', $data['BodyHtml'], $scripts);
+        foreach($scripts[1] as $values){
+           
+            $neaw = '<code> <script>'.$values.'</script> </code>';
+            $values = '<script>'.$values.'</script>';
+            $data['BodyHtml'] = str_replace($values, $neaw, $data['BodyHtml']);
+        }
+	preg_match_all('/<code>(.*?)<\/code>/s', $data['BodyHtml'], $matches);
+        foreach($matches[1] as $value){
+            $new = htmlspecialchars($value);
+            $data['BodyHtml'] = str_replace($value, $new, $data['BodyHtml']);
+        }
+        
         $sql = "UPDATE examples SET Title=:Title, BodyHtml=:BodyHtml, LastEditDate=:LastEditDate WHERE id=:id";
         (new Connection)->updateData($sql, $data);
-        header("Location: ". App::INSTALL_FOLDER."/examples/edit/$id");
+        header("Location: ". App::INSTALL_FOLDER."/examples/index/".$_POST['DocTopicId']);
         exit();
     }
     public function destroy($id) {
-        $time = (new DateTime())->format('Y-m-d H:i:s');
+        $time = BaseController::Carbonated();
         $data = ['Archived'=>true, 'LastEditDate'=>$time, 'id'=>$id];
         $sql = "UPDATE examples SET Archived=:Archived, LastEditDate=:LastEditDate WHERE id=:id";
         (new Connection)->updateData($sql, $data);
